@@ -15,7 +15,7 @@ import UIKit
 
 // codebeat:disable[TOO_MANY_IVARS]
 enum ViewAssociatedKeys {
-    
+
     static var skeletonable = "skeletonable"
     static var hiddenWhenSkeletonIsActive = "hiddenWhenSkeletonIsActive"
     static var status = "status"
@@ -31,64 +31,64 @@ enum ViewAssociatedKeys {
     static var skeletonCornerRadius = "skeletonCornerRadius"
     static var disabledWhenSkeletonIsActive = "disabledWhenSkeletonIsActive"
     static var delayedShowSkeletonWorkItem = "delayedShowSkeletonWorkItem"
-    
+
 }
 // codebeat:enable[TOO_MANY_IVARS]
 
 extension UIView {
-    
+
     enum SkeletonStatus {
         case on
         case off
     }
 
     var _flowDelegate: SkeletonFlowDelegate? {
-        get { return ao_get(pkey: &ViewAssociatedKeys.flowDelegate) as? SkeletonFlowDelegate }
-        set { ao_setOptional(newValue, pkey: &ViewAssociatedKeys.flowDelegate) }
+        get { withUnsafePointer(to: &ViewAssociatedKeys.flowDelegate) { return ao_get(pkey: $0) as? SkeletonFlowDelegate } }
+        set { withUnsafePointer(to: &ViewAssociatedKeys.flowDelegate) {ao_setOptional(newValue, pkey: $0) }  }
     }
 
     var _skeletonLayer: SkeletonLayer? {
-        get { return ao_get(pkey: &ViewAssociatedKeys.skeletonLayer) as? SkeletonLayer }
-        set { ao_setOptional(newValue, pkey: &ViewAssociatedKeys.skeletonLayer) }
+        get { withUnsafePointer(to: &ViewAssociatedKeys.skeletonLayer) { return ao_get(pkey: $0) as? SkeletonLayer } }
+        set { withUnsafePointer(to: &ViewAssociatedKeys.skeletonLayer) {ao_setOptional(newValue, pkey: $0) }  }
     }
 
     var _currentSkeletonConfig: SkeletonConfig? {
-        get { return ao_get(pkey: &ViewAssociatedKeys.currentSkeletonConfig) as? SkeletonConfig }
-        set { ao_setOptional(newValue, pkey: &ViewAssociatedKeys.currentSkeletonConfig) }
+        get { withUnsafePointer(to: &ViewAssociatedKeys.currentSkeletonConfig) { return ao_get(pkey: $0) as? SkeletonConfig } }
+        set { withUnsafePointer(to: &ViewAssociatedKeys.currentSkeletonConfig) {ao_setOptional(newValue, pkey: $0) }  }
     }
 
     var _status: SkeletonStatus {
-        get { return ao_get(pkey: &ViewAssociatedKeys.status) as? SkeletonStatus ?? .off }
-        set { ao_set(newValue, pkey: &ViewAssociatedKeys.status) }
+        get { withUnsafePointer(to: &ViewAssociatedKeys.status) { return ao_get(pkey: $0) as? SkeletonStatus ?? .off } }
+        set { withUnsafePointer(to: &ViewAssociatedKeys.status) {ao_set(newValue, pkey: $0) }  }
     }
 
     var _isSkeletonAnimated: Bool {
-        get { return ao_get(pkey: &ViewAssociatedKeys.isSkeletonAnimated) as? Bool ?? false }
-        set { ao_set(newValue, pkey: &ViewAssociatedKeys.isSkeletonAnimated) }
+        get { withUnsafePointer(to: &ViewAssociatedKeys.isSkeletonAnimated) { return ao_get(pkey: $0) as? Bool ?? false } }
+        set { withUnsafePointer(to: &ViewAssociatedKeys.isSkeletonAnimated) {ao_set(newValue, pkey: $0) }  }
     }
-    
+
     var _delayedShowSkeletonWorkItem: DispatchWorkItem? {
-        get { return ao_get(pkey: &ViewAssociatedKeys.delayedShowSkeletonWorkItem) as? DispatchWorkItem }
-        set { ao_setOptional(newValue, pkey: &ViewAssociatedKeys.delayedShowSkeletonWorkItem) }
+        get { withUnsafePointer(to: &ViewAssociatedKeys.delayedShowSkeletonWorkItem) { return ao_get(pkey: $0) as? DispatchWorkItem } }
+        set { withUnsafePointer(to: &ViewAssociatedKeys.delayedShowSkeletonWorkItem) {ao_setOptional(newValue, pkey: $0) }  }
     }
-    
+
     var _skeletonable: Bool {
-        get { return ao_get(pkey: &ViewAssociatedKeys.skeletonable) as? Bool ?? false }
-        set { ao_set(newValue, pkey: &ViewAssociatedKeys.skeletonable) }
+        get { withUnsafePointer(to: &ViewAssociatedKeys.skeletonable) { return ao_get(pkey: $0) as? Bool ?? false } }
+        set { withUnsafePointer(to: &ViewAssociatedKeys.skeletonable) {ao_set(newValue, pkey: $0) }  }
     }
-    
+
     var _hiddenWhenSkeletonIsActive: Bool {
-        get { return ao_get(pkey: &ViewAssociatedKeys.hiddenWhenSkeletonIsActive) as? Bool ?? false }
-        set { ao_set(newValue, pkey: &ViewAssociatedKeys.hiddenWhenSkeletonIsActive) }
+        get { withUnsafePointer(to: &ViewAssociatedKeys.hiddenWhenSkeletonIsActive) { return ao_get(pkey: $0) as? Bool ?? false } }
+        set { withUnsafePointer(to: &ViewAssociatedKeys.hiddenWhenSkeletonIsActive) {ao_set(newValue, pkey: $0) }  }
     }
-    
+
     var _disabledWhenSkeletonIsActive: Bool {
-        get { return ao_get(pkey: &ViewAssociatedKeys.disabledWhenSkeletonIsActive) as? Bool ?? true }
-        set { ao_set(newValue, pkey: &ViewAssociatedKeys.disabledWhenSkeletonIsActive) }
+        get { withUnsafePointer(to: &ViewAssociatedKeys.disabledWhenSkeletonIsActive) { return ao_get(pkey: $0) as? Bool ?? true } }
+        set { withUnsafePointer(to: &ViewAssociatedKeys.disabledWhenSkeletonIsActive) {ao_set(newValue, pkey: $0) }  }
     }
 
     var _skeletonableCornerRadius: Float {
-        get { return ao_get(pkey: &ViewAssociatedKeys.skeletonCornerRadius) as? Float ?? SkeletonViewAppearance.shared.skeletonCornerRadius }
-        set { ao_set(newValue, pkey: &ViewAssociatedKeys.skeletonCornerRadius) }
+        get { withUnsafePointer(to: &ViewAssociatedKeys.skeletonCornerRadius) { return ao_get(pkey: $0) as? Float ?? SkeletonViewAppearance.shared.skeletonCornerRadius } }
+        set { withUnsafePointer(to: &ViewAssociatedKeys.skeletonCornerRadius) {ao_set(newValue, pkey: $0) }  }
     }
 }

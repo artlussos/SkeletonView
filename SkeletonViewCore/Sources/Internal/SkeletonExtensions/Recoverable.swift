@@ -14,49 +14,49 @@ protocol Recoverable {
 }
 
 extension UIView: Recoverable {
-    
+
     var viewState: RecoverableViewState? {
-        get { return ao_get(pkey: &ViewAssociatedKeys.viewState) as? RecoverableViewState }
-        set { ao_setOptional(newValue, pkey: &ViewAssociatedKeys.viewState) }
+        get { withUnsafePointer(to: &ViewAssociatedKeys.viewState) { return ao_get(pkey: $0) as? RecoverableViewState } }
+        set { withUnsafePointer(to: &ViewAssociatedKeys.viewState) {ao_setOptional(newValue, pkey: $0) }  }
     }
-    
+
     @objc func saveViewState() {
         viewState = RecoverableViewState(view: self)
     }
-    
+
     @objc func recoverViewState(forced: Bool) {
         guard let storedViewState = viewState else { return }
-        
+
         startTransition { [weak self] in
             guard let self = self else { return }
-            
+
             self.layer.cornerRadius = storedViewState.cornerRadius
             self.layer.masksToBounds = storedViewState.clipToBounds
-            
+
             if self.isUserInteractionDisabledWhenSkeletonIsActive {
                 self.isUserInteractionEnabled = storedViewState.isUserInteractionsEnabled
             }
-            
+
             if self.backgroundColor == .clear || forced {
                 self.backgroundColor = storedViewState.backgroundColor
             }
         }
     }
-    
+
 }
 
 extension UILabel {
-    
+
     var labelState: RecoverableTextViewState? {
-        get { return ao_get(pkey: &ViewAssociatedKeys.labelViewState) as? RecoverableTextViewState }
-        set { ao_setOptional(newValue, pkey: &ViewAssociatedKeys.labelViewState) }
+        get { withUnsafePointer(to: &ViewAssociatedKeys.labelViewState) { return ao_get(pkey: $0) as? RecoverableTextViewState } }
+        set { withUnsafePointer(to: &ViewAssociatedKeys.labelViewState) {ao_setOptional(newValue, pkey: $0) }  }
     }
-    
+
     override func saveViewState() {
         super.saveViewState()
         labelState = RecoverableTextViewState(view: self)
     }
-    
+
     override func recoverViewState(forced: Bool) {
         super.recoverViewState(forced: forced)
         startTransition { [weak self] in
@@ -64,48 +64,48 @@ extension UILabel {
                   let storedLabelState = self.labelState else {
                 return
             }
-            
+
             NSLayoutConstraint.deactivate(self.skeletonHeightConstraints)
             self.restoreBackupHeightConstraintsIfNeeded()
-            
+
             if self.textColor == .clear || forced {
                 self.textColor = storedLabelState.textColor
             }
         }
     }
-    
+
 }
 
 extension UITextView {
-    
+
     var textState: RecoverableTextViewState? {
-        get { return ao_get(pkey: &ViewAssociatedKeys.labelViewState) as? RecoverableTextViewState }
-        set { ao_setOptional(newValue, pkey: &ViewAssociatedKeys.labelViewState) }
+        get { withUnsafePointer(to: &ViewAssociatedKeys.labelViewState) { return ao_get(pkey: $0) as? RecoverableTextViewState } }
+        set { withUnsafePointer(to: &ViewAssociatedKeys.labelViewState) {ao_setOptional(newValue, pkey: $0) }  }
     }
-    
+
     override func saveViewState() {
         super.saveViewState()
         textState = RecoverableTextViewState(view: self)
     }
-    
+
     override func recoverViewState(forced: Bool) {
         super.recoverViewState(forced: forced)
         startTransition { [weak self] in
             guard let storedLabelState = self?.textState else { return }
-            
+
             if self?.textColor == .clear || forced {
                 self?.textColor = storedLabelState.textColor
             }
         }
     }
-    
+
 }
 
 extension UITextField {
-    
+
     var textState: RecoverableTextFieldState? {
-        get { return ao_get(pkey: &ViewAssociatedKeys.labelViewState) as? RecoverableTextFieldState }
-        set { ao_setOptional(newValue, pkey: &ViewAssociatedKeys.labelViewState) }
+        get { withUnsafePointer(to: &ViewAssociatedKeys.labelViewState) { return ao_get(pkey: $0) as? RecoverableTextFieldState } }
+        set { withUnsafePointer(to: &ViewAssociatedKeys.labelViewState) {ao_setOptional(newValue, pkey: $0) }  }
     }
 
     override func saveViewState() {
@@ -127,42 +127,42 @@ extension UITextField {
             }
         }
     }
-    
+
 }
 
 extension UIImageView {
-    
+
     var imageState: RecoverableImageViewState? {
-        get { return ao_get(pkey: &ViewAssociatedKeys.imageViewState) as? RecoverableImageViewState }
-        set { ao_setOptional(newValue, pkey: &ViewAssociatedKeys.imageViewState) }
+        get { withUnsafePointer(to: &ViewAssociatedKeys.imageViewState) { return ao_get(pkey: $0) as? RecoverableImageViewState } }
+        set { withUnsafePointer(to: &ViewAssociatedKeys.imageViewState) {ao_setOptional(newValue, pkey: $0) }  }
     }
-    
+
     override func saveViewState() {
         super.saveViewState()
         imageState = RecoverableImageViewState(view: self)
     }
-    
+
     override func recoverViewState(forced: Bool) {
         super.recoverViewState(forced: forced)
         startTransition { [weak self] in
             self?.image = self?.image == nil || forced ? self?.imageState?.image : self?.image
         }
     }
-    
+
 }
 
 extension UIButton {
-    
+
     var buttonState: RecoverableButtonViewState? {
-        get { return ao_get(pkey: &ViewAssociatedKeys.buttonViewState) as? RecoverableButtonViewState }
-        set { ao_setOptional(newValue, pkey: &ViewAssociatedKeys.buttonViewState) }
+        get { withUnsafePointer(to: &ViewAssociatedKeys.buttonViewState) { return ao_get(pkey: $0) as? RecoverableButtonViewState } }
+        set { withUnsafePointer(to: &ViewAssociatedKeys.buttonViewState) {ao_setOptional(newValue, pkey: $0) }  }
     }
-    
+
     override func saveViewState() {
         super.saveViewState()
         buttonState = RecoverableButtonViewState(view: self)
     }
-    
+
     override func recoverViewState(forced: Bool) {
         super.recoverViewState(forced: forced)
         startTransition { [weak self] in
@@ -171,26 +171,26 @@ extension UIButton {
             }
         }
     }
-    
+
 }
 
 extension UITableViewHeaderFooterView {
-    
+
     var headerFooterState: RecoverableTableViewHeaderFooterViewState? {
-        get { return ao_get(pkey: &ViewAssociatedKeys.headerFooterViewState) as? RecoverableTableViewHeaderFooterViewState }
-        set { ao_setOptional(newValue, pkey: &ViewAssociatedKeys.headerFooterViewState) }
+        get { withUnsafePointer(to: &ViewAssociatedKeys.headerFooterViewState) { return ao_get(pkey: $0) as? RecoverableTableViewHeaderFooterViewState } }
+        set { withUnsafePointer(to: &ViewAssociatedKeys.headerFooterViewState) {ao_setOptional(newValue, pkey: $0) }  }
     }
-    
+
     override func saveViewState() {
         super.saveViewState()
         headerFooterState = RecoverableTableViewHeaderFooterViewState(view: self)
     }
-    
+
     override func recoverViewState(forced: Bool) {
         super.recoverViewState(forced: forced)
         startTransition { [weak self] in
             self?.backgroundView?.backgroundColor = self?.headerFooterState?.backgroundViewColor
         }
     }
-    
+
 }

@@ -7,7 +7,7 @@
 //
 
 import UIKit
- 
+
 extension UICollectionView: CollectionSkeleton {
 
     var estimatedNumberOfRows: Int {
@@ -21,33 +21,46 @@ extension UICollectionView: CollectionSkeleton {
             return 0
         }
     }
-    
+
     var skeletonDataSource: SkeletonCollectionDataSource? {
-        get { return ao_get(pkey: &CollectionAssociatedKeys.dummyDataSource) as? SkeletonCollectionDataSource }
+        get {
+            withUnsafePointer(to: &CollectionAssociatedKeys.dummyDataSource) {
+                return ao_get(pkey: $0) as? SkeletonCollectionDataSource
+            }
+        }
+
         set {
-            ao_setOptional(newValue, pkey: &CollectionAssociatedKeys.dummyDataSource)
-            self.dataSource = newValue
+            withUnsafePointer(to: &CollectionAssociatedKeys.dummyDataSource)  {
+                ao_setOptional(newValue, pkey: $0)
+                self.dataSource = newValue
+            }
         }
     }
-    
+
     var skeletonDelegate: SkeletonCollectionDelegate? {
-        get { return ao_get(pkey: &CollectionAssociatedKeys.dummyDelegate) as? SkeletonCollectionDelegate }
+        get {
+            withUnsafePointer(to: &CollectionAssociatedKeys.dummyDelegate)  {
+                return ao_get(pkey: $0) as? SkeletonCollectionDelegate
+            }
+        }
         set {
-            ao_setOptional(newValue, pkey: &CollectionAssociatedKeys.dummyDelegate)
-            self.delegate = newValue
+            withUnsafePointer(to: &CollectionAssociatedKeys.dummyDelegate)  {
+                ao_setOptional(newValue, pkey: $0)
+                self.delegate = newValue
+            }
         }
     }
-    
+
     func addDummyDataSource() {
         guard let originalDataSource = self.dataSource as? SkeletonCollectionViewDataSource,
             !(originalDataSource is SkeletonCollectionDataSource)
             else { return }
-        
+
         let dataSource = SkeletonCollectionDataSource(collectionViewDataSource: originalDataSource)
         self.skeletonDataSource = dataSource
         reloadData()
     }
-    
+
     func updateDummyDataSource() {
         if (dataSource as? SkeletonCollectionDataSource) != nil {
             reloadData()
@@ -55,12 +68,12 @@ extension UICollectionView: CollectionSkeleton {
             addDummyDataSource()
         }
     }
-    
+
     func removeDummyDataSource(reloadAfter: Bool) {
         guard let dataSource = self.dataSource as? SkeletonCollectionDataSource else { return }
         self.skeletonDataSource = nil
         self.dataSource = dataSource.originalCollectionViewDataSource
         if reloadAfter { self.reloadData() }
     }
-    
+
 }
